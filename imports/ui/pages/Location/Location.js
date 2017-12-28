@@ -8,34 +8,41 @@ import {Button} from 'react-bootstrap';
 
 import './Location.scss';
 
-var counter = 0;
+var count = 0;
+var t;
+
 const style = {
   width: '100%',
   height: '100%'
 };
 
-function start_markar_fun(){  
-  setInterval(function() {
-    counter += 1;   
-    console.log(counter);
-    if (counter <= 0) {
-        counter = 1;
-    }
-  }, 1000);
+function start_markar_fun(){ 
+  count++;
+  t = setTimeout(start_markar_fun, 1000);
+  console.log(count);
 }
 
 function pause_markar_fun(){
-  if ( counter < 0 ) {
-    counter = 0;
-    console.log(counter);
-  }
+  clearTimeout(t);
+  console.log('stop me at '+count);
+}
+
+function reset_marker_fun(){
+  pause_markar_fun();
+  count = 0
+  console.log('Reset me '+ count);
 }
   
 var start_markar = function(event){
   start_markar_fun();
 }
+
 var pause_markar = function(event){
   pause_markar_fun();
+}
+
+var reset_markar = function(event){
+  reset_marker_fun();
 }
 export class Location extends React.Component{ 
 
@@ -61,7 +68,7 @@ export class Location extends React.Component{
         <div className="buttons-container">
           <Button bsStyle="success" onClick={start_markar}>Start</Button>
           <Button bsStyle="warning" onClick={pause_markar}>Pause</Button>
-          <Button bsStyle="primary">Reset</Button>
+          <Button bsStyle="primary" onClick={reset_markar}>Reset</Button>
         </div>
       </div>    
 
