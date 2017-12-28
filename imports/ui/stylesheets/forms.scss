@@ -2,9 +2,15 @@
 @import './colors';
 
 form {
-  label,
-  .control-label {
-    display: block;
+  label{
+    &.control-label {
+      display: block;
+    }
+    &.statuslbl{
+      display: inline-block;
+      padding-right: 10px;
+      font-weight: normal;
+    }
   }
   
   label.error {

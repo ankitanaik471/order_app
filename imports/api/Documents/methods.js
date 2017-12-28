@@ -6,8 +6,9 @@ import rateLimit from '../../modules/rate-limit';
 Meteor.methods({
   'documents.insert': function documentsInsert(doc) {
     check(doc, {
-      title: String,
-      body: String,
+      name: String,
+      description: String,
+      status: Boolean,
     });
 
     try {
@@ -19,8 +20,9 @@ Meteor.methods({
   'documents.update': function documentsUpdate(doc) {
     check(doc, {
       _id: String,
-      title: String,
-      body: String,
+      name: String,
+      description: String,
+      status: Boolean,
     });
 
     try {

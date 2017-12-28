@@ -2,7 +2,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormGroup, ControlLabel, Button } from 'react-bootstrap';
+import { FormGroup, ControlLabel, Button, Radio } from 'react-bootstrap';
 import { Meteor } from 'meteor/meteor';
 import { Bert } from 'meteor/themeteorchef:bert';
 import validate from '../../../modules/validate';
@@ -12,19 +12,19 @@ class DocumentEditor extends React.Component {
     const component = this;
     validate(component.form, {
       rules: {
-        title: {
+        name: {
           required: true,
         },
-        body: {
+        description: {
           required: true,
         },
       },
       messages: {
-        title: {
-          required: 'Need a title in here, Seuss.',
+        name: {
+          required: 'Need a name in here, Seuss.',
         },
-        body: {
-          required: 'This thneeds a body, please.',
+        description: {
+          required: 'This thneeds a description, please.',
         },
       },
       submitHandler() { component.handleSubmit(); },
@@ -36,9 +36,12 @@ class DocumentEditor extends React.Component {
     const existingDocument = this.props.doc && this.props.doc._id;
     const methodToCall = existingDocument ? 'documents.update' : 'documents.insert';
     const doc = {
-      title: this.title.value.trim(),
-      body: this.body.value.trim(),
+      name: this.name.value.trim(),
+      description: this.description.value.trim(),
+      status: this.status.checked
     };
+
+    console.log(doc.status)
 
     if (existingDocument) doc._id = existingDocument;
 
@@ -59,28 +62,44 @@ class DocumentEditor extends React.Component {
     return (
       <form ref={form => (this.form = form)} onSubmit={event => event.preventDefault()}>
         <FormGroup>
-          <ControlLabel>Title</ControlLabel>
+          <ControlLabel>Order Name:</ControlLabel>
           <input
             type="text"
             className="form-control"
-            name="title"
-            ref={title => (this.title = title)}
-            defaultValue={doc && doc.title}
-            placeholder="Oh, The Places You'll Go!"
+            name="name"
+            ref={name => (this.name = name)}
+            defaultValue={doc && doc.name}
+            placeholder="Order name"
           />
         </FormGroup>
         <FormGroup>
-          <ControlLabel>Body</ControlLabel>
+          <ControlLabel>Order Description</ControlLabel>
           <textarea
             className="form-control"
-            name="body"
-            ref={body => (this.body = body)}
-            defaultValue={doc && doc.body}
-            placeholder="Congratulations! Today is your day. You're off to Great Places! You're off and away!"
+            name="description"
+            ref={description => (this.description = description)}
+            defaultValue={doc && doc.description}
+            placeholder="Order details"
           />
         </FormGroup>
+        <FormGroup>
+          <ControlLabel>Time Delivery</ControlLabel>
+          <ControlLabel className="statuslbl">
+            <input
+            defaultChecked={doc.status}
+            ref={status => (this.status = status)}
+            type="radio"
+            name="status"/>Yes
+          </ControlLabel>  
+          <ControlLabel className="statuslbl">
+            <input
+            defaultChecked={!doc.status}
+            type="radio"
+            name="status"/>No
+          </ControlLabel>            
+        </FormGroup>
         <Button type="submit" bsStyle="success">
-          {doc && doc._id ? 'Save Changes' : 'Add Document'}
+          {doc && doc._id ? 'Save Changes' : 'Add Order'}
         </Button>
       </form>
     );
@@ -88,7 +107,7 @@ class DocumentEditor extends React.Component {
 }
 
 DocumentEditor.defaultProps = {
-  doc: { title: '', body: '' },
+  doc: { name: '', description: '', status: false },
 };
 
 DocumentEditor.propTypes = {

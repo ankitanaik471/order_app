@@ -36,14 +36,18 @@ Documents.schema = new SimpleSchema({
       if (this.isInsert || this.isUpdate) return (new Date()).toISOString();
     },
   },
-  title: {
+  name: {
     type: String,
-    label: 'The title of the document.',
+    label: 'name of the order.',
   },
-  body: {
+  description: {
     type: String,
-    label: 'The body of the document.',
+    label: 'description of the order.',
   },
+  status: {
+    type: Boolean,
+    label: 'time delevery ?',
+  }
 });
 
 Documents.attachSchema(Documents.schema);

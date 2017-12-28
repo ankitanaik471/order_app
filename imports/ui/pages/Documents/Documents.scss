@@ -1,3 +1,24 @@
 .Documents table tbody tr td {
   vertical-align: middle;
 }
+.Documents{
+	button{
+		border: none;
+	    padding: 0;
+	    width: 30px;
+	    float: right;
+	    margin-top: 0 !important;
+		&:hover{
+			background-color: transparent;
+		}
+
+		&:active{
+			background-color: transparent;
+		}
+		
+		&:focus{
+			outline: none;
+			background-color: transparent;
+		}
+	}
+}

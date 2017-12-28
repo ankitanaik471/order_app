@@ -28,50 +28,47 @@ const Documents = ({
 }) => (!loading ? (
   <div className="Documents">
     <div className="page-header clearfix">
-      <h4 className="pull-left">Documents</h4>
-      <Link className="btn btn-success pull-right" to={`${match.url}/new`}>Add Document</Link>
+      <h4 className="pull-left">Order List</h4>
+      <Link className="btn btn-success pull-right" to={`${match.url}/new`}>Add Order</Link>
     </div>
     {documents.length ?
       <Table responsive>
         <thead>
           <tr>
             <th>Title</th>
-            <th>Last Updated</th>
-            <th>Created</th>
+            <th>Description</th>
+            <th>Time Delivery</th>
             <th />
             <th />
           </tr>
         </thead>
         <tbody>
           {documents.map(({
-            _id, title, createdAt, updatedAt,
+            _id, name, status, description, createdAt, updatedAt,
           }) => (
             <tr key={_id}>
-              <td>{title}</td>
-              <td>{timeago(updatedAt)}</td>
-              <td>{monthDayYearAtTime(createdAt)}</td>
+              <td>{name}</td>
+              <td>{description}</td>
+              <td>{String(status)}</td>
+              <td>&nbsp;</td>
               <td>
                 <Button
-                  bsStyle="primary"
-                  onClick={() => history.push(`${match.url}/${_id}`)}
+                  onClick={() => history.push(`${match.url}/${_id}/edit`)}
                   block
                 >
-                  View
+                  <i className="fa fa-pencil-square"></i>
                 </Button>
-              </td>
-              <td>
                 <Button
-                  bsStyle="danger"
                   onClick={() => handleRemove(_id)}
                   block
                 >
-                  Delete
+                  <i className="fa fa-trash"></i>
                 </Button>
-              </td>
+              </td>              
             </tr>
           ))}
         </tbody>
-      </Table> : <Alert bsStyle="warning">No documents yet!</Alert>}
+      </Table> : <Alert bsStyle="warning">No Orders</Alert>}
   </div>
 ) : <Loading />);
 
