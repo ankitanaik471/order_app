@@ -11,41 +11,47 @@ import './Location.scss';
 var count = 0;
 var t;
 
+// TODO:
+var lat = 41.854885;
+var lng = -88.081807;
+
 const style = {
   width: '100%',
   height: '100%'
 };
-
+// Start marker
 function start_markar_fun(){ 
   count++;
+  lat = lat + 0.5;
+  lng = lng + 0.5;
+
   t = setTimeout(start_markar_fun, 1000);
-  console.log(count);
+  console.log(count, lat, lng);
+}
+var start_markar = function(event){
+  start_markar_fun();
 }
 
+// Pause marker
 function pause_markar_fun(){
   clearTimeout(t);
   console.log('stop me at '+count);
 }
+var pause_markar = function(event){
+  pause_markar_fun();
+}
 
+// Reset marker
 function reset_marker_fun(){
   pause_markar_fun();
   count = 0
   console.log('Reset me '+ count);
 }
-  
-var start_markar = function(event){
-  start_markar_fun();
-}
-
-var pause_markar = function(event){
-  pause_markar_fun();
-}
-
 var reset_markar = function(event){
   reset_marker_fun();
 }
-export class Location extends React.Component{ 
 
+export class Location extends React.Component{ 
   constructor(props){
     super();
   }
@@ -58,8 +64,8 @@ export class Location extends React.Component{
           google={this.props.google}
           zoom={10}
           initialCenter={{
-            lat: 41.854885,
-            lng: -88.081807
+            lat: lat,
+            lng: lng
           }}
           style={style}>
           <Marker onClick={this.onMarkerClick}
