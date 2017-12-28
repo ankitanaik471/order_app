@@ -14,6 +14,7 @@ var t;
 // TODO:
 var lat = 41.854885;
 var lng = -88.081807;
+// http://jsfiddle.net/robschmuecker/XZXLk/ -- functionality
 
 const style = {
   width: '100%',
