@@ -7,7 +7,7 @@ import scriptLoader from 'react-async-script-loader';
 import './Location.scss';
 
 // var count = 0;
-// var t;
+var t;
 
 // // TODO:
 // var lat = 41.854885;
@@ -51,7 +51,7 @@ import './Location.scss';
 // }
 
 
-export class Location extends React.Component{
+export class Location extends React.Component{  
 
   constructor(props){
     super();
@@ -61,17 +61,26 @@ export class Location extends React.Component{
     this.map = undefined;
     this.marker = undefined;
 
+    this.time = 2;
+
     this.defaultPosition = {lat: -25.363, lng: 131.044}
   }
 
   
   componentWillReceiveProps ({ isScriptLoaded, isScriptLoadSucceed }) {
-    console.log(this.props);
     if (isScriptLoaded && !this.props.isScriptLoaded) { // load finished 
       if (isScriptLoadSucceed) {
         this.Map = window.google.maps.Map;
         this.Marker = window.google.maps.Marker;
+        this.map = new this.Map(document.getElementById('map'), {
+          zoom: 2,
+          center: this.defaultPosition
+        });
 
+        this.marker = new this.Marker({
+          position: this.defaultPosition,
+          map: this.map
+        });
         this.afterScriptLoad();
       }
       else this.props.onError()
@@ -82,20 +91,11 @@ export class Location extends React.Component{
     console.log(this.marker);
   }
 
-  afterScriptLoad() {
-    this.map = new this.Map(document.getElementById('map'), {
-      zoom: 2,
-      center: this.defaultPosition
-    });
+  afterScriptLoad() {    
 
-    this.marker = new this.Marker({
-      position: this.defaultPosition,
-      map: this.map
-    });
-
-    setInterval(() => {
-      console.log("latitude"+this.defaultPosition.lat);
-      console.log("longitude"+this.defaultPosition.lng);
+    t = setInterval(() => {
+      // console.log("latitude"+this.defaultPosition.lat);
+      // console.log("longitude"+this.defaultPosition.lng);
       if ( this.defaultPosition.lat > 0 ) {        
         this.marker.setPosition(new window.google.maps.LatLng(this.defaultPosition.lat, this.defaultPosition.lng++));
       }else {
@@ -104,14 +104,40 @@ export class Location extends React.Component{
       
     }, 100); 
   }
-
+  startEvent(){
+    console.log("start latitude"+this.defaultPosition.lat);
+    console.log("start longitude"+this.defaultPosition.lng);
+    this.afterScriptLoad();
+    console.log('update data');
+  }
+  pauseEvent(){
+    console.log("pause latitude"+this.defaultPosition.lat);
+    console.log("pause longitude"+this.defaultPosition.lng);
+    clearInterval(t);
+  }
+  reset(){
+    this.defaultPosition = {lat: -25.363, lng: 131.044};  
+    this.map = new this.Map(document.getElementById('map'), {
+      zoom: 2,
+      center: this.defaultPosition
+    });
+    this.marker = new this.Marker({
+      position: this.defaultPosition,
+      map: this.map
+    });
+     
+    clearInterval(t);
+    console.log('reset me');
+  }
   render(){
     return (
       <div className="map-container">
         <h1>Moving Marker</h1>
         <div id="map"></div>
         <div className="buttons-container">
-          <button onClick = {this.startEvent}>START</button>                 
+          <button onClick = {() => this.startEvent()}>START</button>                 
+          <button onClick = {() => this.pauseEvent()}>PAUSE</button>                 
+          <button onClick = {() => this.reset()}>RESET</button>                 
         </div>
       </div>    
     )
