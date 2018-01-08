@@ -13,6 +13,9 @@ const AuthenticatedNavigation = ({ name, history }) => (
       <LinkContainer to="/location">
         <NavItem eventKey={2} href="/location">Location</NavItem>       
       </LinkContainer>
+      <LinkContainer to="/googlemap">
+        <NavItem eventKey={3} href="/googlemap">GoogleMap</NavItem>       
+      </LinkContainer>
     </Nav>
     <Nav pullRight>
       <NavDropdown eventKey={2} title={name} id="user-nav-dropdown">

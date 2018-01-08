@@ -15,12 +15,20 @@ Meteor.methods({
 	    } catch (exception) {
 	      throw new Meteor.Error('Someting went wrong', exception);
 	    }
+	},
+	'mapdata.remove': function mapdataRemove(){
+		try{
+			return MapData.remove({});			
+		}catch(exception){
+			throw new Meteor.Error('Someting went wrong', exception);			
+		}
 	}
 });
 
 rateLimit({
   methods: [
     'mapdata.insert',
+    'mapdata.remove',
   ],
   limit: 5,
   timeRange: 1000,

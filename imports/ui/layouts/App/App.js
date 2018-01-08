@@ -18,6 +18,7 @@ import EditDocument from '../../pages/EditDocument/EditDocument';
 import Signup from '../../pages/Signup/Signup';
 import Login from '../../pages/Login/Login';
 import Location from '../../pages/Location/Location';
+import GoogleMap from '../../pages/GoogleMap/GoogleMap';
 import Logout from '../../pages/Logout/Logout';
 import VerifyEmail from '../../pages/VerifyEmail/VerifyEmail';
 import RecoverPassword from '../../pages/RecoverPassword/RecoverPassword';
@@ -42,6 +43,7 @@ const App = props => (
         <Grid>
           <Switch>
             <Route exact name="index" path="/location" component={Location} />
+            <Route exact name="index" path="/googlemap" component={GoogleMap} />
             <Route exact name="index" path="/" component={Index} />
             <Authenticated exact path="/documents" component={Documents} {...props} />
             <Authenticated exact path="/documents/new" component={NewDocument} {...props} />

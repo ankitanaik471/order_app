@@ -4,7 +4,6 @@ import { compose } from 'redux';
 import { Button } from 'react-bootstrap';
 import { Meteor } from 'meteor/meteor';
 
-import ReactDOM from 'react-dom';
 import scriptLoader from 'react-async-script-loader';
 import MapData from '../../../api/MapData/MapData';
 import { LocationListWithTracker } from '../../components/LocationList/LocationList';
@@ -105,6 +104,10 @@ export class Location extends React.Component{
     });
   }
 
+  removeall(){
+    Meteor.call('mapdata.remove', function(e,r){});
+  }
+
   render(){
     return (
       <div className="map-container">
@@ -114,6 +117,7 @@ export class Location extends React.Component{
           <button onClick = {() => this.startEvent()}>START</button>                 
           <button onClick = {() => this.pauseEvent()}>PAUSE</button>                 
           <button onClick = {() => this.reset()}>RESET</button>                 
+          <button onClick = {() => this.removeall()}>D-All</button>                 
         </div>
         <LocationListWithTracker></LocationListWithTracker>
       </div>    
