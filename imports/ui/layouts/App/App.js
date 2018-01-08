@@ -60,7 +60,6 @@ const App = props => (
             <Route component={NotFound} />
           </Switch>
         </Grid>
-        <Footer />
       </div>
     ) : ''}
   </Router>

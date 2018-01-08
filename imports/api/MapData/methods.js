@@ -1,19 +1,19 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
-import { MapData } from './MapData';
+import MapData from './MapData';
 import rateLimit from '../../modules/rate-limit';
 
-Meteor.methods({
+Meteor.methods({	
 	'mapdata.insert': function mapDataInsert(doc){
 		check(doc, {
-			longitude: String,
-			latitude: String,
+			longitude: Number,
+			latitude: Number,
 		});
 
 		try {
 	      return MapData.insert({ owner: this.userId, ...doc });
 	    } catch (exception) {
-	      throw new Meteor.Error('500', exception);
+	      throw new Meteor.Error('Someting went wrong', exception);
 	    }
 	}
 });

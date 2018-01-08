@@ -21,15 +21,14 @@ MapData.schema = new SimpleSchema({
 	    label: 'The ID of the user this document belongs to.',
   	},
 	longitude: {
-		type: String,
+		type: Number,
 		label: 'longitude',
 	},
 	latitude: {
-		type: String,
+		type: Number,
 		label: 'latitude',
 	}
 });
 
 MapData.attachSchema(MapData.schema);
-
 export default MapData; 

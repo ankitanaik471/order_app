@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check'; 
 import MapData from '../MapData';
 
-Meteor.publish('mapdata', function mapdata() { 
+Meteor.publish('MapData', function mapdata() { 
   return MapData.find({ owner: this.userId }); 
 }); 
  
