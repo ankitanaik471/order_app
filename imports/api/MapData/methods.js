@@ -11,19 +11,34 @@ Meteor.methods({
 		});
 
 		try {
-	      return MapData.insert({ owner: this.userId, ...doc });
+	      return MapData.insert({owner: this.userId, ...doc});
 	    } catch (exception) {
 	      throw new Meteor.Error('Someting went wrong', exception);
 	    }
-	},
+	},	
 	'mapdata.remove': function mapdataRemove(){
 		try{
 			return MapData.remove({});			
 		}catch(exception){
 			throw new Meteor.Error('Someting went wrong', exception);			
 		}
-	}
+	},
+
 });
+
+MapData.after.insert(function(id, doc){
+	setInterval(() => {
+		console.log(id);
+		console.log(doc);		
+		doc.latitude = doc.latitude * 0.5;
+		doc.longitude = doc.longitude * 0.5;
+		MapData.update(id, {$set: doc});
+	}, 500);		
+});
+
+// MapData.after.update(function(id, doc)){
+// 	setTimeout();
+// }
 
 rateLimit({
   methods: [

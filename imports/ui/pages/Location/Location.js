@@ -20,12 +20,10 @@ export class Location extends React.Component{
 
     this.map = undefined;
     this.marker = undefined;
-
     this.time = 2;
 
-    this.defaultPosition = {lat: -25.363, lng: 131.044};
+    this.defaultPosition = {lat: MapData.schema._schema.latitude.defaultValue, lng: MapData.schema._schema.longitude.defaultValue};
   }
-
   
   componentWillReceiveProps ({ isScriptLoaded, isScriptLoadSucceed }) {
     if (isScriptLoaded && !this.props.isScriptLoaded) { // load finished 
@@ -46,10 +44,6 @@ export class Location extends React.Component{
     }
   }
 
-  randomMarker() {
-    console.log(this.marker);
-  }
-
   afterScriptLoad() {    
     t = setInterval(() => {
       if ( this.defaultPosition.lat > 0 ) {        
@@ -62,11 +56,7 @@ export class Location extends React.Component{
   }
 
   startEvent(){
-    this.afterScriptLoad();    
-  }
-
-  pauseEvent(){
-    clearInterval(t);
+    this.afterScriptLoad();  
     const doc = { 
       longitude: this.defaultPosition.lat,
       latitude: this.defaultPosition.lng
@@ -75,9 +65,13 @@ export class Location extends React.Component{
       if (e) {
         console.log('error is' + e);
       }else{
-        console.log('result is' + r);
+        console.log('result is' + r);        
       }
-    });
+    });  
+  }
+
+  pauseEvent(){
+    clearInterval(t);    
   }
 
   reset(){
@@ -90,18 +84,7 @@ export class Location extends React.Component{
       position: this.defaultPosition,
       map: this.map
     });     
-    clearInterval(t);
-    const doc = { 
-      longitude: this.defaultPosition.lat,
-      latitude: this.defaultPosition.lng
-    }
-    Meteor.call('mapdata.insert', doc, function(e,r){      
-      if (e) {
-        console.log('error is' + e);
-      }else{
-        console.log('result is' + r);
-      }
-    });
+    clearInterval(t);    
   }
 
   removeall(){

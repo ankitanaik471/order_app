@@ -23,12 +23,15 @@ MapData.schema = new SimpleSchema({
 	longitude: {
 		type: Number,
 		label: 'longitude',
+		defaultValue: 18.099,
 	},
 	latitude: {
 		type: Number,
 		label: 'latitude',
+		defaultValue: -25.363,		
 	}
 });
 
 MapData.attachSchema(MapData.schema);
+
 export default MapData; 
