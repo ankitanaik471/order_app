@@ -33,19 +33,34 @@ Meteor.methods({
 		}
 	},
 	changeData(){
-		console.log('hi');
-		const doc = {
-			longitude: MapData.schema._schema.longitude.defaultValue,
-  			latitude: MapData.schema._schema.latitude.defaultValue
-		}
-		Meteor.call('mapdata.insert', doc, function(e,r){});
+		if ( MapData.find().fetch().length == 0 ) {
+			const doc = {
+				longitude: MapData.schema._schema.longitude.defaultValue,
+	  			latitude: MapData.schema._schema.latitude.defaultValue
+			}
+			Meteor.call('mapdata.insert', doc, function(e,r){});
+		}else{
+			var doc = MapData.findOne();
+			time = setInterval(() => {
+				doc.latitude = doc.latitude + 0.005;
+				doc.longitude = doc.longitude + 0.005;
+				Meteor.call('mapdata.update', doc._id, doc, function(e,r){});
+			}, 1000);
+		}		
 	},
 	pauseChange(){
 		clearInterval(time);
 	},
+	resetValues(){
+		var doc = MapData.findOne();		
+		doc.latitude = MapData.schema._schema.longitude.defaultValue;
+		doc.longitude = MapData.schema._schema.latitude.defaultValue;
+		Meteor.call('mapdata.update', doc._id, doc, function(e,r){});		
+	},
 });
 
 MapData.after.insert(function(user_id, doc){
+	console.log(doc);
 	try{
 		time = setInterval(() => {
 			doc.latitude = doc.latitude + 0.005;

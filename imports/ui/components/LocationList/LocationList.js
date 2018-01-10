@@ -4,9 +4,6 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { Table, Alert, Button } from 'react-bootstrap';
 import MapDataCollection from '../../../api/MapData/MapData';
 
-console.log(MapDataCollection);
-console.log(PropTypes);
-
 const LocationList = ({ loading, documents, match, history }) => ( !loading ? (
 		<div className="LocationList">
 			<br/>
