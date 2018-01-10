@@ -5,35 +5,17 @@ import MapData from '../../../api/MapData/MapData';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Button } from 'react-bootstrap';
 
-var id;
-
-const doc = { 
-  longitude: MapData.schema._schema.longitude.defaultValue,
-  latitude: MapData.schema._schema.latitude.defaultValue
-}
-const changeValue = () => {		
-	Meteor.call('mapdata.insert', doc, function(e,r){
-		if (e) {
-			console.log('error');
-		}else{	
-			id = r;			
-		}
-	});
-};
-
 const GoogleMap = ({ documents, history }) => (
 	console.log(documents),
 	<div className="GoogleMap">				
 		{documents.map(({_id, longitude, latitude}) => (
 				<div className="myDiv" key={_id}>{longitude}, {latitude}</div>
 			))}
-				<br />
-				<br />
-				<div>
-				<span>{ doc.latitude }</span>				
-				<span>{ doc.longitude }</span>				
-				<br />
-				<Button onClick={()=>changeValue()}>start</Button>
+			<br />
+			<br />
+			<div>						
+				<Button onClick={()=> Meteor.call('changeData', function(){}) }>Start</Button>
+				<Button onClick={()=> Meteor.call('pauseChange', function(){}) }>Pause</Button>
 				<br />
 			</div>
 	</div>
