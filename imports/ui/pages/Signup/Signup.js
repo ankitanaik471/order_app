@@ -83,19 +83,8 @@ class Signup extends React.Component {
     return (
       <div className="Signup">
         <Row>
-          <Col xs={12} sm={6} md={5} lg={4}>
-            <h4 className="page-header">Sign Up</h4>
-            <Row>
-              <Col xs={12}>
-                <OAuthLoginButtons
-                  services={['facebook', 'github', 'google']}
-                  emailMessage={{
-                    offset: 97,
-                    text: 'Sign Up with an Email Address',
-                  }}
-                />
-              </Col>
-            </Row>
+          <Col xs={12} sm={6} md={4} mdOffset={4} lg={4}>
+            <h4 className="page-header text-center">Sign Up</h4>            
             <form ref={form => (this.form = form)} onSubmit={event => event.preventDefault()}>
               <Row>
                 <Col xs={6}>

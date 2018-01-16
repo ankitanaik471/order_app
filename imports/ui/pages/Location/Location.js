@@ -1,28 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { compose } from 'redux';
-import { Button } from 'react-bootstrap';
-import { Meteor } from 'meteor/meteor';
-
+import { withTracker } from 'meteor/react-meteor-data';
 import scriptLoader from 'react-async-script-loader';
-import MapData from '../../../api/MapData/MapData';
-import { LocationListWithTracker } from '../../components/LocationList/LocationList';
 
 import './Location.scss';
 
-var t;
 export class Location extends React.Component{  
 
   constructor(props){
-    super();
+    super(props);
     this.Map = undefined;
     this.Marker = undefined;
-
     this.map = undefined;
     this.marker = undefined;
-    this.time = 2;
-
-    this.defaultPosition = {lat: MapData.schema._schema.latitude.defaultValue, lng: MapData.schema._schema.longitude.defaultValue};
   }
   
   componentWillReceiveProps ({ isScriptLoaded, isScriptLoadSucceed }) {
@@ -30,13 +20,14 @@ export class Location extends React.Component{
       if (isScriptLoadSucceed) {
         this.Map = window.google.maps.Map;
         this.Marker = window.google.maps.Marker;
+
         this.map = new this.Map(document.getElementById('map'), {
           zoom: 2,
-          center: this.defaultPosition
+          center: new window.google.maps.LatLng(0, 0)
         });
 
         this.marker = new this.Marker({
-          position: this.defaultPosition,
+          position: new window.google.maps.LatLng(0, 0),
           map: this.map
         });
       }
@@ -44,74 +35,19 @@ export class Location extends React.Component{
     }
   }
 
-  afterScriptLoad() {    
-    t = setInterval(() => {
-      if ( this.defaultPosition.lat > 0 ) {        
-        this.marker.setPosition(new window.google.maps.LatLng(this.defaultPosition.lat, this.defaultPosition.lng++));
-      }else {
-        this.marker.setPosition(new window.google.maps.LatLng(this.defaultPosition.lat++, this.defaultPosition.lng));         
-      }
-      
-    }, 100); 
-  }
-
-  startEvent(){
-    this.afterScriptLoad();  
-    const doc = { 
-      longitude: this.defaultPosition.lat,
-      latitude: this.defaultPosition.lng
-    }
-    Meteor.call('mapdata.insert', doc, function(e,r){      
-      if (e) {
-        console.log('error is' + e);
-      }else{
-        console.log('result is' + r);        
-      }
-    });  
-  }
-
-  pauseEvent(){
-    clearInterval(t);    
-  }
-
-  reset(){
-    this.defaultPosition = {lat: -25.363, lng: 131.044};  
-    this.map = new this.Map(document.getElementById('map'), {
-      zoom: 2,
-      center: this.defaultPosition
-    });
-    this.marker = new this.Marker({
-      position: this.defaultPosition,
-      map: this.map
-    });     
-    clearInterval(t);    
-  }
-
-  removeall(){
-    Meteor.call('mapdata.remove', function(e,r){});
+  componentDidUpdate(prevProps, prevState, prevContext) {
+    console.log(this.props);
+    this.marker.setPosition(new window.google.maps.LatLng(this.props.lat, this.props.lng));
   }
 
   render(){
-    return (
-      <div className="map-container">
-        <h1>Moving Marker</h1>
+      return (
+      <div className="map-container">        
         <div id="map"></div>
-        <div className="buttons-container">
-          <button onClick = {() => this.startEvent()}>START</button>                 
-          <button onClick = {() => this.pauseEvent()}>PAUSE</button>                 
-          <button onClick = {() => this.reset()}>RESET</button>                 
-          <button onClick = {() => this.removeall()}>D-All</button>                 
-        </div>
-        <LocationListWithTracker></LocationListWithTracker>
       </div>    
     )
   }
 }
-
-Location.propTypes = {
-  doc: PropTypes.object,
-  history: PropTypes.object.isRequired,
-};
 
 export default scriptLoader(
   [

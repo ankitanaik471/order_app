@@ -42,6 +42,10 @@ Meteor.methods({
       throw new Meteor.Error('500', exception);
     }
   },
+  displayMe(e){
+    console.log(e);
+    console.log(Documents.find().fetch());
+  },
 });
 
 rateLimit({

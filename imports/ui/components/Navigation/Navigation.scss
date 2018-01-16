@@ -1,6 +1,32 @@
-.navbar {
-  border-radius: 0;
-  border-left: none;
-  border-right: none;
-  border-top: none;
+.navbar-default{
+	border: none;
+	border-radius: 0;
+	background-color: #ffbf01;
+}
+.navbar-default .navbar-brand{
+	color: #fff;
+    height: 80px;
+    line-height: 50px;
+    font-size: 25px;
+}
+.navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus{
+	color: #fff;
+}
+.navbar-default .navbar-nav > li > a{
+	padding-top: 30px;
+    padding-bottom: 30px;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus{
+	color: #fff;
+}
+.navbar-default .navbar-nav > li.active > a{
+	color: #000;
+    background-color: #fff;
+}
+.navbar-default .navbar-nav > li.active > a:hover, .navbar-default .navbar-nav > li.active > a:focus{
+	background-color: #fff;
+	color: #000;
 }

@@ -72,6 +72,10 @@ MapData.after.insert(function(user_id, doc){
 	}	
 });
 
+Meteor.startup(() => {
+	console.log('im a starter');
+});
+
 rateLimit({
   methods: [
     'mapdata.insert',

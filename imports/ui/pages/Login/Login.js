@@ -53,19 +53,9 @@ class Login extends React.Component {
     return (
       <div className="Login">
         <Row>
-          <Col xs={12} sm={6} md={5} lg={4}>
-            <h4 className="page-header">Log In</h4>
-            <Row>
-              <Col xs={12}>
-                <OAuthLoginButtons
-                  services={['facebook', 'github', 'google']}
-                  emailMessage={{
-                    offset: 100,
-                    text: 'Log In with an Email Address',
-                  }}
-                />
-              </Col>
-            </Row>
+          <Col xs={12} sm={6} md={4} mdOffset={4} lg={4}>
+            <h4 className="page-header text-center">Log In</h4>
+            
             <form ref={form => (this.form = form)} onSubmit={event => event.preventDefault()}>
               <FormGroup>
                 <ControlLabel>Email Address</ControlLabel>

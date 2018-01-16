@@ -28,8 +28,9 @@ const Documents = ({
 }) => (!loading ? (
   <div className="Documents">
     <div className="page-header clearfix">
-      <h4 className="pull-left">Order List</h4>
+      <h4>Order List</h4>      
       <Link className="btn btn-success pull-right" to={`${match.url}/new`}>Add Order</Link>
+      <Link className="btn btn-success pull-right" to={`${match.url}/searchme`}>Let's Search</Link>
     </div>
     {documents.length ?
       <Table responsive>

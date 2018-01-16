@@ -52,4 +52,10 @@ Documents.schema = new SimpleSchema({
 
 Documents.attachSchema(Documents.schema);
 
+Documents.helpers({
+  lists(){
+    return Documents.find().fetch();
+  }
+});
+
 export default Documents;
